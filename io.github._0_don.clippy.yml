@@ -30,6 +30,16 @@ modules:
     build-commands:
       - npm ci --offline --legacy-peer-deps --cache=$PWD/flatpak-node/npm-cache
       - cargo --offline fetch --manifest-path src-tauri/Cargo.toml
+      - |
+        MNN_VENDOR_DIR="${CARGO_HOME}/vendor/ocr-rs-2.2.1/3rd_party/prebuilt"
+        mkdir -p "${MNN_VENDOR_DIR}"
+        if [ "$(uname -m)" = "x86_64" ]; then
+          cp mnn-dev-linux-x86_64.tar.gz "${MNN_VENDOR_DIR}/"
+          tar xzf "${MNN_VENDOR_DIR}/mnn-dev-linux-x86_64.tar.gz" -C "${MNN_VENDOR_DIR}/"
+        else
+          cp mnn-dev-linux-aarch64.tar.gz "${MNN_VENDOR_DIR}/"
+          tar xzf "${MNN_VENDOR_DIR}/mnn-dev-linux-aarch64.tar.gz" -C "${MNN_VENDOR_DIR}/"
+        fi
       - npx tauri build --no-bundle
       - install -Dm755 src-tauri/target/release/clippy -t /app/bin/
       - install -Dm644 src-tauri/icons/32x32.png /app/share/icons/hicolor/32x32/apps/clippy.png
@@ -40,6 +50,16 @@ modules:
     sources:
       - type: git
         url: https://github.com/0-don/clippy.git
-        commit: 885c7c40d476777a2dd706bf83047e745b13e094
+        commit: dbacdde3ab23746a29ba819ac9285ac6c13bd845
       - node-sources.json
       - cargo-sources.json
+      - type: file
+        url: https://github.com/zibo-chen/MNN-Prebuilds/releases/download/dev/mnn-dev-linux-x86_64.tar.gz
+        sha256: 805af7adeb7c0fdc2b3650869c2d5010720caf90da6d08df31fe7202431c4636
+        only-arches:
+          - x86_64
+      - type: file
+        url: https://github.com/zibo-chen/MNN-Prebuilds/releases/download/dev/mnn-dev-linux-aarch64.tar.gz
+        sha256: 5bbef569bd6c30d5223e174f8c79746de978f9649ec204c53fddb6933e1c1815
+        only-arches:
+          - aarch64
