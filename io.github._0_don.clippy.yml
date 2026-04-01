@@ -5,6 +5,7 @@ sdk: org.gnome.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.rust-stable
   - org.freedesktop.Sdk.Extension.node20
+  - org.freedesktop.Sdk.Extension.llvm20
 command: clippy
 rename-icon: clippy
 finish-args:
@@ -16,7 +17,8 @@ finish-args:
   - --talk-name=com.canonical.AppMenu.Registrar
 
 build-options:
-  append-path: /usr/lib/sdk/node20/bin:/usr/lib/sdk/rust-stable/bin
+  append-path: /usr/lib/sdk/node20/bin:/usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/llvm20/bin
+  prepend-ld-library-path: /usr/lib/sdk/llvm20/lib
 
 modules:
   - shared-modules/libappindicator/libappindicator-gtk3-12.10.json
@@ -27,9 +29,23 @@ modules:
       env:
         CARGO_HOME: /run/build/clippy/cargo
         CARGO_NET_OFFLINE: "true"
+        LIBCLANG_PATH: /usr/lib/sdk/llvm20/lib
     build-commands:
       - npm ci --offline --legacy-peer-deps --cache=$PWD/flatpak-node/npm-cache
       - cargo --offline fetch --manifest-path src-tauri/Cargo.toml
+      - |
+        OCR_VERSION=$(ls ${CARGO_HOME}/vendor/ | grep -oP 'ocr-rs-\K[0-9.]+' | head -1)
+        if [ -n "$OCR_VERSION" ]; then
+          MNN_VENDOR_DIR="${CARGO_HOME}/vendor/ocr-rs-${OCR_VERSION}/3rd_party/prebuilt"
+          mkdir -p "${MNN_VENDOR_DIR}"
+          ARCH_NAME="$(uname -m)"
+          [ "$ARCH_NAME" = "x86_64" ] && ARCH_NAME="x86_64" || ARCH_NAME="aarch64"
+          TARBALL="mnn-dev-linux-${ARCH_NAME}.tar.gz"
+          if [ -f "$TARBALL" ]; then
+            cp "$TARBALL" "${MNN_VENDOR_DIR}/"
+            tar xzf "${MNN_VENDOR_DIR}/${TARBALL}" -C "${MNN_VENDOR_DIR}/"
+          fi
+        fi
       - npx tauri build --no-bundle
       - install -Dm755 src-tauri/target/release/clippy -t /app/bin/
       - install -Dm644 src-tauri/icons/32x32.png /app/share/icons/hicolor/32x32/apps/clippy.png
@@ -40,6 +56,16 @@ modules:
     sources:
       - type: git
         url: https://github.com/0-don/clippy.git
-        commit: 885c7c40d476777a2dd706bf83047e745b13e094
+        commit: db7e372a398bd05c00d26f006d127ea0a8e88f51
       - node-sources.json
       - cargo-sources.json
+      - type: file
+        url: https://github.com/zibo-chen/MNN-Prebuilds/releases/download/dev/mnn-dev-linux-x86_64.tar.gz
+        sha256: 805af7adeb7c0fdc2b3650869c2d5010720caf90da6d08df31fe7202431c4636
+        only-arches:
+          - x86_64
+      - type: file
+        url: https://github.com/zibo-chen/MNN-Prebuilds/releases/download/dev/mnn-dev-linux-aarch64.tar.gz
+        sha256: 5bbef569bd6c30d5223e174f8c79746de978f9649ec204c53fddb6933e1c1815
+        only-arches:
+          - aarch64
