@@ -56,16 +56,16 @@ modules:
     sources:
       - type: git
         url: https://github.com/0-don/clippy.git
-        commit: 4916a38b91bf34cbd442538c72f9354e739e02ad
+        commit: 635c4f4943525f7642a7b5a96a8fa45c1e41c59e
       - node-sources.json
       - cargo-sources.json
       - type: file
         url: https://github.com/zibo-chen/MNN-Prebuilds/releases/download/dev/mnn-dev-linux-x86_64.tar.gz
-        sha256: 805af7adeb7c0fdc2b3650869c2d5010720caf90da6d08df31fe7202431c4636
+        sha256: da7b7d2c7c249c8460d7e6a66b504a3125bdcaa3a54218f8c9ec0fa8549e37eb
         only-arches:
           - x86_64
       - type: file
         url: https://github.com/zibo-chen/MNN-Prebuilds/releases/download/dev/mnn-dev-linux-aarch64.tar.gz
-        sha256: 5bbef569bd6c30d5223e174f8c79746de978f9649ec204c53fddb6933e1c1815
+        sha256: 51eea637937a9b4c6bf3aebd112837d087a2cf0a69b08ef7d13fb149eea004a2
         only-arches:
           - aarch64
