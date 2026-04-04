@@ -5076,14 +5076,14 @@
     {
         "type": "archive",
         "archive-type": "tar-gzip",
-        "url": "https://static.crates.io/crates/ocr-rs/ocr-rs-2.2.1.crate",
-        "sha256": "75b8fc5b023d86778fd334efe200f2f06051aef1f020d45f5174c4f141a70ad2",
-        "dest": "cargo/vendor/ocr-rs-2.2.1"
+        "url": "https://static.crates.io/crates/ocr-rs/ocr-rs-2.2.2.crate",
+        "sha256": "e43c09ee8b7e39408dc44fa2abf04d90c8e8b7a59e8319212149ecdb1755da6c",
+        "dest": "cargo/vendor/ocr-rs-2.2.2"
     },
     {
         "type": "inline",
-        "contents": "{\"package\": \"75b8fc5b023d86778fd334efe200f2f06051aef1f020d45f5174c4f141a70ad2\", \"files\": {}}",
-        "dest": "cargo/vendor/ocr-rs-2.2.1",
+        "contents": "{\"package\": \"e43c09ee8b7e39408dc44fa2abf04d90c8e8b7a59e8319212149ecdb1755da6c\", \"files\": {}}",
+        "dest": "cargo/vendor/ocr-rs-2.2.2",
         "dest-filename": ".cargo-checksum.json"
     },
     {
