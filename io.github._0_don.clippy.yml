@@ -56,7 +56,7 @@ modules:
     sources:
       - type: git
         url: https://github.com/0-don/clippy.git
-        commit: 6dcb978acf7188afe8aa56d861986d78072e9b39
+        commit: 43f492dea37e3ed052e537aad596a6b9071a3f0b
       - node-sources.json
       - cargo-sources.json
       - type: file
