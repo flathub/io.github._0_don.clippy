@@ -9319,6 +9319,19 @@
     {
         "type": "archive",
         "archive-type": "tar-gzip",
+        "url": "https://static.crates.io/crates/window-vibrancy/window-vibrancy-0.7.1.crate",
+        "sha256": "010797bd7c40396fbc59d3105089fed0885fe267a0ef4a0a4646df54e28647f6",
+        "dest": "cargo/vendor/window-vibrancy-0.7.1"
+    },
+    {
+        "type": "inline",
+        "contents": "{\"package\": \"010797bd7c40396fbc59d3105089fed0885fe267a0ef4a0a4646df54e28647f6\", \"files\": {}}",
+        "dest": "cargo/vendor/window-vibrancy-0.7.1",
+        "dest-filename": ".cargo-checksum.json"
+    },
+    {
+        "type": "archive",
+        "archive-type": "tar-gzip",
         "url": "https://static.crates.io/crates/windows/windows-0.59.0.crate",
         "sha256": "7f919aee0a93304be7f62e8e5027811bbba96bcb1de84d6618be56e43f8a32a1",
         "dest": "cargo/vendor/windows-0.59.0"
